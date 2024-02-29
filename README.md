@@ -273,9 +273,53 @@ Ultralytics offers two licensing options to accommodate diverse use cases:
 - **AGPL-3.0 License**: This [OSI-approved](https://opensource.org/licenses/) open-source license is ideal for students and enthusiasts, promoting open collaboration and knowledge sharing. See the [LICENSE](https://github.com/ultralytics/ultralytics/blob/main/LICENSE) file for more details.
 - **Enterprise License**: Designed for commercial use, this license permits seamless integration of Ultralytics software and AI models into commercial goods and services, bypassing the open-source requirements of AGPL-3.0. If your scenario involves embedding our solutions into a commercial offering, reach out through [Ultralytics Licensing](https://ultralytics.com/license).
 
-## <div align="center">Contact</div>
+## <div align="center">Instructions</div>
+1. Cборка докера. 
+```
+cd docker
 
-For Ultralytics bug reports and feature requests please visit [GitHub Issues](https://github.com/ultralytics/ultralytics/issues), and join our [Discord](https://ultralytics.com/discord) community for questions and discussions!
+docker build -f Dockerfile -t <image_name> ./
+
+cd ../
+
+chmod +x run_docker.sh
+
+sh run_docker.sh <container_name> <image_name> <GPU_id>
+```
+Example:
+```
+cd docker
+
+docker build -f Dockerfile -t user/face_rec ./
+
+cd ../
+
+chmod +x run_docker.sh
+
+sh run_docker.sh face_rec user/face_rec 0
+```
+
+2. Запуск метода внутри докера:
+
+
+`cd /face_recognition`
+
+`python predict_face.py --model_path yolov8l-face.onnx --source data/300sec_19_02_2024_12_54_29.mov --save_txt --conf 0.25 --line_thickness 1 --name results/300sec_19_02_2024_12_54_29 --exist_ok --device cpu`
+
+Explanation of each argument:
+```
+--model_path: Path to your YOLO model file. In this example, it's /path/to/model.onnx.
+--source: The path to the directory containing images or to the video file you want to process. Replace /path/to/media with the appropriate path.
+--save: Indicates that you want to save the processed images or video.
+--save_txt: Indicates that you want to save the results to a text file.
+--conf: The confidence threshold for the model.
+--line_thickness: The line thickness for the bounding boxes.
+--name: The path to the output directory where the results will be saved. Replace /path/to/output_directory with your desired path.
+--exist_ok: Allows overwriting if the output directory already exists.
+--device: The device to use for inference, cpu in this case.
+```
+
+
 
 <br>
 <div align="center">
